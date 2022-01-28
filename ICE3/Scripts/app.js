@@ -68,9 +68,50 @@
             if(subscribeCheckbox.checked)
             {
                 let contact = new Contact(fullName.value, contactNumber.value, emailAddress.value);
-                console.log(contact.serialize());
+                if(contact.serialize())
+                {
+                    let key = contact.FullName.substring(0, 1) + Date.now();
+
+                    localStorage.setItem(key, contact.serialize());
+                }
             }
         });
+    }
+
+    function DisplayContactListPage()
+    {
+        if(localStorage.length > 0)
+        {
+            let contactList = document.getElementById("contactList");
+
+            let data = "";
+
+            let keys = Object.keys(localStorage); // returns a list of keys from localStorage
+
+            let index = 1;
+
+            // for every key in the keys string array
+            for(const key of keys)
+            {
+                let contactData = localStorage.getItem(key); // get localStorage data value
+
+                let contact = new Contact(); // create an empty Contact object
+                contact.deserialize(contactData);
+
+                data += `<tr>
+                <th scope="row" class="text-center">${index}</th>
+                <td>${contact.FullName}</td>
+                <td>${contact.ContactNumber}</td>
+                <td>${contact.EmailAddress}</td>
+                <td></td>
+                <td></td>
+                </tr>`;
+                
+                index++;
+            }
+
+            contactList.innerHTML = data;
+        }
     }
 
 
@@ -96,6 +137,10 @@
             case "Contact Us":
                 DisplayContactPage();
                 break;
+            case "Contact-List":
+                DisplayContactListPage();
+                break;
+
         }
        
     }
