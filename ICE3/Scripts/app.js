@@ -37,10 +37,6 @@
 
         // to delete
         //Article.remove();
-
-        // test our new Contact class
-        let darryl = new Contact("Darryl Olsen", "555-555-5555", "darryl.olsen@example.com");
-        console.log(darryl.toString());
     }
 
     function DisplayProductsPage()
