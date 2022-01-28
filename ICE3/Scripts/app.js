@@ -57,6 +57,20 @@
     function DisplayContactPage()
     {
         console.log("Contact Page");
+
+        let sendButton = document.getElementById("sendButton");
+        let subscribeCheckbox = document.getElementById("subscribeCheckbox");
+
+        sendButton.addEventListener("click", function(event)
+        {
+            event.preventDefault(); // right now for testing only
+
+            if(subscribeCheckbox.checked)
+            {
+                let contact = new Contact(fullName.value, contactNumber.value, emailAddress.value);
+                console.log(contact.serialize());
+            }
+        });
     }
 
 
