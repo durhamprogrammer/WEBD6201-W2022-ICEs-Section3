@@ -63,7 +63,7 @@
 
         sendButton.addEventListener("click", function(event)
         {
-            event.preventDefault(); // right now for testing only
+            //event.preventDefault(); // right now for testing only
 
             if(subscribeCheckbox.checked)
             {
