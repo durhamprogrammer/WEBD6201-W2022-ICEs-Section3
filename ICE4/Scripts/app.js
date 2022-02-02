@@ -5,11 +5,46 @@
     function DisplayHomePage()
     {
         console.log("Home Page");
-        let AboutUsButton = document.getElementById("AboutUsButton");
-        AboutUsButton.addEventListener("click", function()
+
+        // old code
+        // let AboutUsButton = document.getElementById("AboutUsButton");
+        // AboutUsButton.addEventListener("click", () =>
+        // {
+        //     location.href = "about.html";
+        // });
+            
+        // 1) Fattest Memory Footprint
+        // jQuery way - get all elements with an id of AboutUsButton and for each element add a "click" event
+        $("#AboutUsButton").on("click", () => 
         {
             location.href = "about.html";
         });
+
+        // 2) Second Fattest - because we it returns a collection of elements
+        // JavaScript way - get all elements with an id of AboutUsButton for each element, loop...
+        // document.querySelectorAll("#AboutUsButton").forEach(element => 
+        // {
+        //     // for each element add a "click" event
+        //     element.addEventListener("click", () => 
+        //     {
+        //         location.href = "about.html";
+        //     });
+        // });
+
+        // 3) Pretty Lean
+        // JavaScript way - get an element that matches an id of AboutUsButton and add a "click"
+        // document.querySelector("#AboutUsButton").addEventListener("click", () => 
+        // {
+        //              location.href = "about.html";
+        // });
+
+        // 4) Leanest
+        // document.getElementById("AboutUsButton").addEventListener("click", () => 
+        // {
+        //              location.href = "about.html";
+        // });
+
+       
 
         // Step 1. get an entry point(s) (insertion point / deletion point) reference 
         let DocumentBody = document.body;
@@ -31,12 +66,6 @@
         Article.innerHTML = ArticleParagraph;
         DocumentBody.appendChild(Article);
 
-        // to insert before
-        // target a location (element) to insert before 
-        // TargetElement.before(elementToInsert);
-
-        // to delete
-        //Article.remove();
     }
 
     function DisplayProductsPage()
