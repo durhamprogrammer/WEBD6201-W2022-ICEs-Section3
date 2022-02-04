@@ -41,7 +41,7 @@
      */
     function AddContact(fullName, contactNumber, emailAddress)
     {
-        let contact = new Contact(fullName, contactNumber, emailAddress);
+        let contact = new core.Contact(fullName, contactNumber, emailAddress);
         if(contact.serialize())
         {
             let key = contact.FullName.substring(0, 1) + Date.now();
@@ -62,7 +62,7 @@
 
             if(subscribeCheckbox.checked)
             {
-                let contact = new Contact(fullName.value, contactNumber.value, emailAddress.value);
+                let contact = new core.Contact(fullName.value, contactNumber.value, emailAddress.value);
                 if(contact.serialize())
                 {
                     let key = contact.FullName.substring(0, 1) + Date.now();
@@ -90,7 +90,7 @@
             {
                 let contactData = localStorage.getItem(key); // get localStorage data value
 
-                let contact = new Contact(); // create an empty Contact object
+                let contact = new core.Contact(); // create an empty Contact object
                 contact.deserialize(contactData);
 
                 data += `<tr>
@@ -158,7 +158,7 @@
             default:
                 {
                     // get contact info from localStorage
-                    let contact = new Contact();
+                    let contact = new core.Contact();
                     contact.deserialize(localStorage.getItem(page));
 
                     // display the contact in the edit form
@@ -178,6 +178,11 @@
                         // replace the item in local storage
                         localStorage.setItem(page, contact.serialize());
                         // go back to the contact list page (refresh)
+                        location.href = "contact-list.html";
+                    });
+
+                    $("#cancelButton").on("click", () =>
+                    {
                         location.href = "contact-list.html";
                     });
                     
