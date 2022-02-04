@@ -128,6 +128,9 @@
         }
     }
 
+    /**
+     * This function allows JavaScript to work on the Edit Page
+     */
     function displayEditPage()
     {
         console.log("Edit Page");
