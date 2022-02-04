@@ -217,6 +217,7 @@
             case "Contact-List":
                 DisplayContactListPage();
                 break;
+                //new
             case "Edit":
                 displayEditPage();
                 break;
