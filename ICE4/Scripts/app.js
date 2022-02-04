@@ -5,65 +5,11 @@
     function DisplayHomePage()
     {
         console.log("Home Page");
-
-        // old code
-        // let AboutUsButton = document.getElementById("AboutUsButton");
-        // AboutUsButton.addEventListener("click", () =>
-        // {
-        //     location.href = "about.html";
-        // });
-            
-        // 1) Fattest Memory Footprint
-        // jQuery way - get all elements with an id of AboutUsButton and for each element add a "click" event
         $("#AboutUsButton").on("click", () => 
         {
             location.href = "about.html";
         });
-
-        // 2) Second Fattest - because we it returns a collection of elements
-        // JavaScript way - get all elements with an id of AboutUsButton for each element, loop...
-        // document.querySelectorAll("#AboutUsButton").forEach(element => 
-        // {
-        //     // for each element add a "click" event
-        //     element.addEventListener("click", () => 
-        //     {
-        //         location.href = "about.html";
-        //     });
-        // });
-
-        // 3) Pretty Lean
-        // JavaScript way - get an element that matches an id of AboutUsButton and add a "click"
-        // document.querySelector("#AboutUsButton").addEventListener("click", () => 
-        // {
-        //              location.href = "about.html";
-        // });
-
-        // 4) Leanest
-        // document.getElementById("AboutUsButton").addEventListener("click", () => 
-        // {
-        //              location.href = "about.html";
-        // });
-
-       
-
-        // Step 1. get an entry point(s) (insertion point / deletion point) reference 
-       // let DocumentBody = document.body;
-        //let MainContent = document.getElementsByTagName("main")[0];
-
-        // Step 2. create an element(s) to insert
-        //let MainParagraph = document.createElement("p");
-        //let Article = document.createElement("article");
-        //let ArticleParagraph = `<p id="ArticleParagraph" class ="mt-3">This is the Article Paragraph</p>`
-
-        // Step 3. configure the new element
-        //MainParagraph.setAttribute("id", "MainParagraph");
-        //MainParagraph.setAttribute("class", "mt-3");
-        //MainParagraph.textContent = "This is the Main Paragraph";
-        //Article.setAttribute("class", "container");
-
-        // Step 4. Add / Insert the new element
-        //MainContent.appendChild(MainParagraph);
-        //Article.innerHTML = ArticleParagraph;
+    
         $("main").append(`<p id="MainParagraph" class="mt-3">This is the Main Paragraph</p>`);
         $("body").append(`<article class="container">
         <p id="ArticleParagraph" class ="mt-3">This is the Article Paragraph</p>
@@ -86,6 +32,24 @@
         console.log("About Page");
     }
 
+    /**
+     *This function adds a Contact object to localStorage
+     *
+     * @param {string} fullName
+     * @param {string} contactNumber
+     * @param {string} emailAddress
+     */
+    function AddContact(fullName, contactNumber, emailAddress)
+    {
+        let contact = new Contact(fullName, contactNumber, emailAddress);
+        if(contact.serialize())
+        {
+            let key = contact.FullName.substring(0, 1) + Date.now();
+
+            localStorage.setItem(key, contact.serialize());
+        }
+    }
+
     function DisplayContactPage()
     {
         console.log("Contact Page");
@@ -95,7 +59,6 @@
 
         sendButton.addEventListener("click", function(event)
         {
-            //event.preventDefault(); // right now for testing only
 
             if(subscribeCheckbox.checked)
             {
@@ -143,6 +106,38 @@
             }
 
             contactList.innerHTML = data;
+
+            $("#addButton").on("click", ()=>
+            {
+                location.href = "edit.html#add";
+            });
+        }
+    }
+
+    function displayEditPage()
+    {
+        console.log("Edit Page");
+
+        let page = location.hash.substring(1);
+
+        switch(page)
+        {
+            case "add":
+                {
+                    $("main>h1").text("Add Contact");
+
+                    $("#editButton").html(`<i class="fas fa-plus-circle fa-lg"></i> Add`)
+
+                    $("#editButton").on("click", (event) =>
+                    {
+                        event.preventDefault();
+                        AddContact(fullName.value, contactNumber.value, emailAddress.value);
+                        location.href = "contact-list.html";
+                    });
+                }
+                break;
+            case "edit":
+                break;
         }
     }
 
@@ -171,6 +166,9 @@
                 break;
             case "Contact-List":
                 DisplayContactListPage();
+                break;
+            case "Edit":
+                displayEditPage();
                 break;
 
         }
