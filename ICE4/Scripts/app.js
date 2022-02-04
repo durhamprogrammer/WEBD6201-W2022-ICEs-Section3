@@ -119,7 +119,12 @@
                     localStorage.removeItem($(this).val())
                 }
                 location.href = "contact-list.html";
-            })
+            });
+
+            $("button.edit").on("click", function()
+            {
+                location.href = "edit.html#" + $(this).val();
+            });
         }
     }
 
@@ -150,7 +155,33 @@
                     });
                 }
                 break;
-            case "edit":
+            default:
+                {
+                    // get contact info from localStorage
+                    let contact = new Contact();
+                    contact.deserialize(localStorage.getItem(page));
+
+                    // display the contact in the edit form
+                    $("#fullName").val(contact.FullName);
+                    $("#contactNumber").val(contact.ContactNumber);
+                    $("#emailAddress").val(contact.EmailAddress);
+
+                    $("#editButton").on("click", (event) =>
+                    {
+                        event.preventDefault();
+                        
+                        // get changes from the page
+                        contact.FullName = $("#fullName").val();
+                        contact.ContactNumber = $("#contactNumber").val();
+                        contact.EmailAddress = $("#emailAddress").val();
+
+                        // replace the item in local storage
+                        localStorage.setItem(page, contact.serialize());
+                        // go back to the contact list page (refresh)
+                        location.href = "contact-list.html";
+                    });
+                    
+                }
                 break;
         }
     }
