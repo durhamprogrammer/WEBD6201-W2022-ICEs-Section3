@@ -50,9 +50,37 @@
         }
     }
 
+    function TestFullName()
+    {
+        let messageArea = $("#messageArea").hide();
+        let fullNamePattern = /^([A-Z][a-z]{1,})((\s|,|-)([A-Z][a-z]{1,}))*(\s|,|-)([A-Z][a-z]{1,})$/;
+
+        $("#fullName").on("blur", function()
+        {
+            let fullNameTextValue = $(this).val();
+            if(!fullNamePattern.test(fullNameTextValue))
+            {
+                // doesn't pass RegEx test
+                $(this).trigger("focus"); // go back to the FullName text box
+                $(this).trigger("select"); // select all the Text in the FullName text box
+                messageArea.addClass("alert alert-danger"); // add the alert to the div element
+                messageArea.text("Please enter a valid Full Name. This must include at least a Capitalized First Name and a Capitalized Last Name.");
+                messageArea.show();
+            }
+            else
+            {
+                // does pass RegEx test
+                messageArea.removeAttr("class");
+                messageArea.hide();
+            }
+        });
+    }
+
     function DisplayContactPage()
     {
         console.log("Contact Page");
+
+        TestFullName();
 
         let sendButton = document.getElementById("sendButton");
         let subscribeCheckbox = document.getElementById("subscribeCheckbox");
