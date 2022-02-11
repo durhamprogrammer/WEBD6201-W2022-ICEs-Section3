@@ -87,9 +87,9 @@
             if(!contactNumberPattern.test(contactNumberTextValue))
             {
                 // doesn't pass RegEx test
-                $(this).trigger("focus"); // go back to the FullName text box
-                $(this).trigger("select"); // select all the Text in the FullName text box
-                messageArea.addClass("alert alert-danger"); // add the alert to the div element
+                $(this).trigger("focus"); 
+                $(this).trigger("select"); 
+                messageArea.addClass("alert alert-danger"); 
                 messageArea.text("Please enter a valid Contact Number. Example: (416) 555-5555");
                 messageArea.show();
             }
@@ -105,6 +105,27 @@
     function TestEmailAddress()
     {
         let messageArea = $("#messageArea").hide();
+        let emailAddressPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$/;
+    
+        $("#emailAddress").on("blur", function()
+        {
+            let emailAddressTextValue = $(this).val();
+            if(!emailAddressPattern.test(emailAddressTextValue))
+            {
+                // doesn't pass RegEx test
+                $(this).trigger("focus"); 
+                $(this).trigger("select"); 
+                messageArea.addClass("alert alert-danger"); 
+                messageArea.text("Please enter a valid Email Address.");
+                messageArea.show();
+            }
+            else
+            {
+                // does pass RegEx test
+                messageArea.removeAttr("class");
+                messageArea.hide();
+            }
+        });
     }
 
     function DisplayContactPage()
