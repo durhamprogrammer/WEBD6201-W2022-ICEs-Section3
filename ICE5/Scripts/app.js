@@ -50,7 +50,6 @@
         }
     }
 
-
     /**
      * This method validates a field in the form and displays an error in the message area div element
      *
@@ -233,37 +232,50 @@
         }
     }
 
+    function displayLoginPage()
+    {
+        console.log("Login Page");
+    }
+
+    function displayRegisterPage()
+    {
+        console.log("Register Page");
+    }
 
     // named function option
     function Start()
     {
         console.log("App Started!");
 
-        switch(document.title)
-        {
-            case "Home":
-                DisplayHomePage();
-                break;
-            case "Our Products":
-                DisplayProductsPage();
-                break;
-            case "Our Services":
-                DisplayServicesPage();
-                break;
-            case "About Us":
-                DisplayAboutPage();
-                break;
-            case "Contact Us":
-                DisplayContactPage();
-                break;
-            case "Contact-List":
-                DisplayContactListPage();
-                break;
-                //new
-            case "Edit":
-                displayEditPage();
-                break;
-
+        switch (document.title) {
+          case "Home":
+            DisplayHomePage();
+            break;
+          case "Our Products":
+            DisplayProductsPage();
+            break;
+          case "Our Services":
+            DisplayServicesPage();
+            break;
+          case "About Us":
+            DisplayAboutPage();
+            break;
+          case "Contact Us":
+            DisplayContactPage();
+            break;
+          case "Contact-List":
+            DisplayContactListPage();
+            break;
+          //new
+          case "Edit":
+            displayEditPage();
+            break;
+          case "Login":
+            displayLoginPage();
+            break;
+          case "Register":
+            displayRegisterPage();
+            break;
         }
        
     }
