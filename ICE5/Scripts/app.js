@@ -76,11 +76,44 @@
         });
     }
 
+    function TestContactNumber()
+    {
+        let messageArea = $("#messageArea").hide();
+        let contactNumberPattern = /^(\+\d{1,3}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+    
+        $("#contactNumber").on("blur", function()
+        {
+            let contactNumberTextValue = $(this).val();
+            if(!contactNumberPattern.test(contactNumberTextValue))
+            {
+                // doesn't pass RegEx test
+                $(this).trigger("focus"); // go back to the FullName text box
+                $(this).trigger("select"); // select all the Text in the FullName text box
+                messageArea.addClass("alert alert-danger"); // add the alert to the div element
+                messageArea.text("Please enter a valid Contact Number. Example: (416) 555-5555");
+                messageArea.show();
+            }
+            else
+            {
+                // does pass RegEx test
+                messageArea.removeAttr("class");
+                messageArea.hide();
+            }
+        });
+    }
+
+    function TestEmailAddress()
+    {
+        let messageArea = $("#messageArea").hide();
+    }
+
     function DisplayContactPage()
     {
         console.log("Contact Page");
 
         TestFullName();
+        TestContactNumber();
+        TestEmailAddress();
 
         let sendButton = document.getElementById("sendButton");
         let subscribeCheckbox = document.getElementById("subscribeCheckbox");
