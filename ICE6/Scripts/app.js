@@ -2,6 +2,43 @@
 // AKA -- Anonymous Self-Executing Function
 (function()
 {
+    /**
+     * This function uses AJAX to open a connection to the server and returns 
+     * the data payload to the callback function
+     *
+     * @param {string} method
+     * @param {string} url
+     * @param {function} callback
+     */
+    function AjaxRequest(method, url, callback)
+    {
+        // AJAX STEPS
+        // Step 1. - instantiate an XHR Object
+        let XHR = new XMLHttpRequest();
+
+        // Step 2. - add an event listener for readystatechange
+        XHR.addEventListener("readystatechange", () =>
+        {
+            if(XHR.readyState === 4 && XHR.status === 200)
+            {
+                if(typeof callback === "function")
+                {
+                    callback(XHR.responseText);
+                }
+                else
+                {
+                    console.error("ERROR: callback not a function");
+                }
+            }
+        });
+
+        // Step 3. - Open a connection to the server
+        XHR.open(method, url);
+
+        // Step 4. - Send the request to the server
+        XHR.send();
+    }
+
     function DisplayHomePage()
     {
         console.log("Home Page");
@@ -15,25 +52,13 @@
         <p id="ArticleParagraph" class ="mt-3">This is the Article Paragraph</p>
         </article>`);
 
-        // AJAX STEPS
-        // Step 1. - instantiate an XHR Object
-        let XHR = new XMLHttpRequest();
-
-        // Step 2. - add an event listener for readystatechange
-        XHR.addEventListener("readystatechange", () =>
+        AjaxRequest("GET", "header.html", (data) =>
         {
-            if(XHR.readyState === 4 && XHR.status === 200)
-            {
-                $("header").html(XHR.responseText);
-                $(`li>a:contains(${document.title})`).addClass("active");
-            }
+            $("header").html(data);
+            $(`li>a:contains(${document.title})`).addClass("active");
         });
 
-        // Step 3. - Open a connection to the server
-        XHR.open("GET", "header.html");
-
-        // Step 4. - Send the request to the server
-        XHR.send();
+       
     }
 
     function DisplayProductsPage()
