@@ -15,6 +15,25 @@
         <p id="ArticleParagraph" class ="mt-3">This is the Article Paragraph</p>
         </article>`);
 
+        // AJAX STEPS
+        // Step 1. - instantiate an XHR Object
+        let XHR = new XMLHttpRequest();
+
+        // Step 2. - add an event listener for readystatechange
+        XHR.addEventListener("readystatechange", () =>
+        {
+            if(XHR.readyState === 4 && XHR.status === 200)
+            {
+                $("header").html(XHR.responseText);
+                $(`li>a:contains(${document.title})`).addClass("active");
+            }
+        });
+
+        // Step 3. - Open a connection to the server
+        XHR.open("GET", "header.html");
+
+        // Step 4. - Send the request to the server
+        XHR.send();
     }
 
     function DisplayProductsPage()
