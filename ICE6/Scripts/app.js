@@ -39,6 +39,17 @@
         XHR.send();
     }
 
+    /**
+     * This function loads the header.html content into a page
+     *
+     * @param {string} html_data
+     */
+    function LoadHeader(html_data)
+    {
+        $("header").html(html_data);
+        $(`li>a:contains(${document.title})`).addClass("active"); // update active link
+    }
+
     function DisplayHomePage()
     {
         console.log("Home Page");
@@ -51,14 +62,6 @@
         $("body").append(`<article class="container">
         <p id="ArticleParagraph" class ="mt-3">This is the Article Paragraph</p>
         </article>`);
-
-        AjaxRequest("GET", "header.html", (data) =>
-        {
-            $("header").html(data);
-            $(`li>a:contains(${document.title})`).addClass("active");
-        });
-
-       
     }
 
     function DisplayProductsPage()
@@ -290,6 +293,8 @@
     function Start()
     {
         console.log("App Started!");
+
+        AjaxRequest("GET", "header.html", LoadHeader);
 
         switch (document.title) {
           case "Home":
