@@ -48,6 +48,7 @@
     {
         $("header").html(html_data);
         $(`li>a:contains(${document.title})`).addClass("active"); // update active link
+        checkLogin();
     }
 
     function DisplayHomePage()
@@ -339,6 +340,27 @@
         });
     }
 
+    function checkLogin()
+    {
+        // if user is logged in
+        if(sessionStorage.getItem("user"))
+        {
+            // swap out the login link for logout
+            $("#login").html(
+                `<a id="logout" class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>`
+            );
+            
+            $("#logout").on("click", function()
+            {
+                // perform logout
+                sessionStorage.clear();
+
+                // redirect back to login
+                location.href = "login.html";
+            });
+        }
+    }
+
     function displayRegisterPage()
     {
         console.log("Register Page");
@@ -350,6 +372,8 @@
         console.log("App Started!");
 
         AjaxRequest("GET", "header.html", LoadHeader);
+
+        
 
         switch (document.title) {
           case "Home":
