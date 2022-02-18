@@ -1,6 +1,5 @@
 (function (core) 
 {
-
     class User
     {
         // getters and setters
@@ -100,6 +99,5 @@
     }
 
     core.User = User;
-
 
 })(core || (core={}));
