@@ -373,8 +373,6 @@
 
         AjaxRequest("GET", "header.html", LoadHeader);
 
-        
-
         switch (document.title) {
           case "Home":
             DisplayHomePage();
