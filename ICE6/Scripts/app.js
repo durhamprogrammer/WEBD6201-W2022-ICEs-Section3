@@ -282,6 +282,61 @@
     function displayLoginPage()
     {
         console.log("Login Page");
+        let messageArea =  $("#messageArea");
+        messageArea.hide();
+
+        $("#loginButton").on("click", function()
+        {
+            let success = false;
+            // create an empty user object
+            let newUser = new core.User();
+
+            // uses jQuery shortcut to load the users.json file
+            $.get("./Data/users.json", function(data)
+            {
+                // for every user in the users.json file
+                for (const user of data.users) 
+                {
+                    // check if the username and password entered in the form matches this user
+                    if(username.value == user.Username && password.value == user.Password)
+                    {
+                        // get the user data from the file and assign to our empty user object
+                        newUser.fromJSON(user);
+                        success = true;
+                        break;
+                    }
+                }
+
+                 // if username and password matches - success.. the perform the login sequence
+                if(success)
+                {
+                    // add user to session storage
+                    sessionStorage.setItem("user", newUser.serialize());
+
+                    // hide any error message
+                    messageArea.removeAttr("class").hide();
+
+                    // redirect the user to the secure area of our site - contact-list.html
+                    location.href = "contact-list.html";
+                }
+                // else if bad credentials were entered...
+                else
+                {
+                    // display an error message
+                    $("#username").trigger("focus").trigger("select");
+                    messageArea.addClass("alert alert-danger").text("Error: Invalid Login Information").show();
+                }
+            });
+        });
+
+        $("#cancelButton").on("click", function()
+        {
+            // clear the login form
+            document.forms[0].reset();
+
+            // return to the home page
+            location.href = "index.html";
+        });
     }
 
     function displayRegisterPage()
