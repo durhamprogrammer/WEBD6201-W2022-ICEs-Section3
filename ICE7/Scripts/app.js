@@ -43,12 +43,39 @@
      * This function loads the header.html content into a page
      *
      * @param {string} html_data
+     * @returns {void}
      */
     function LoadHeader(html_data)
     {
+        // use AJAX to load the header content
+
+        // inject Header content into the page
         $("header").html(html_data);
+
+
         $(`li>a:contains(${document.title})`).addClass("active"); // update active link
-        checkLogin();
+        
+        CheckLogin();
+    }
+
+    /**
+     * 
+     * @param {string} activeLink 
+     * @param {function} callback 
+     * @returns {void}
+     */
+    function LoadContent(activeLink, callback)
+    {
+
+    }
+
+    /**
+     *
+     * @returns {void}
+     */
+    function LoadFooter()
+    {
+
     }
 
     function DisplayHomePage()
@@ -215,7 +242,7 @@
     /**
      * This function allows JavaScript to work on the Edit Page
      */
-    function displayEditPage()
+    function DisplayEditPage()
     {
         console.log("Edit Page");
 
@@ -280,7 +307,7 @@
         }
     }
 
-    function displayLoginPage()
+    function DisplayLoginPage()
     {
         console.log("Login Page");
         let messageArea =  $("#messageArea");
@@ -340,7 +367,7 @@
         });
     }
 
-    function checkLogin()
+    function CheckLogin()
     {
         // if user is logged in
         if(sessionStorage.getItem("user"))
@@ -361,9 +388,40 @@
         }
     }
 
-    function displayRegisterPage()
+    function DisplayRegisterPage()
     {
         console.log("Register Page");
+    }
+
+    function Display404Page()
+    {
+
+    }
+
+    /**
+     *
+     *
+     * @param {string} activeLink
+     * @returns {function}
+     */
+    function ActiveLinkCallBack(activeLink)
+    {
+        switch(activeLink)
+        {
+            case "home": return DisplayHomePage;
+            case "about": return DisplayAboutPage;
+            case "products": return DisplayProductsPage;
+            case "services": return DisplayServicesPage;
+            case "contact": return DisplayContactPage;
+            case "contact-list": return DisplayContactListPage;
+            case "edit": return DisplayEditPage;
+            case "login": return DisplayLoginPage;
+            case "register": return DisplayRegisterPage;
+            case "404": return Display404Page;
+            default:
+                console.error("ERROR: callback does not exist: " + activeLink);
+                break;
+        }
     }
 
     // named function option
@@ -371,9 +429,14 @@
     {
         console.log("App Started!");
 
-        AjaxRequest("GET", "header.html", LoadHeader);
+        //LoadHeader(router.ActiveLink);
+        //AjaxRequest("GET", "./Views/components/header.html", LoadHeader);
 
-        switch (document.title) {
+        LoadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
+
+        LoadFooter();
+
+        /* switch (document.title) {
           case "Home":
             DisplayHomePage();
             break;
@@ -402,7 +465,7 @@
           case "Register":
             displayRegisterPage();
             break;
-        }
+        } */
        
     }
 
