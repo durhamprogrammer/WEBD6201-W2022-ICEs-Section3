@@ -1,3 +1,4 @@
+let core;
 (function(core)
 {
     class Router
@@ -107,3 +108,23 @@
     core.Router = Router;
 
 })(core || (core = {}));
+
+let router = new core.Router();
+
+router.AddTable([
+    "/", // default route
+    "/home",
+    "/about",
+    "/services",
+    "/contact",
+    "/contact-list",
+    "/projects",
+    "/register",
+    "/login",
+    "/edit"
+]);
+
+let route = location.pathname; // alias for location.pathname
+
+// if route is found in the Routing Table
+router.ActiveLink = (router.Find(route) > -1) ? (route == "/") ? "home" : route.substring(1) : "404";
