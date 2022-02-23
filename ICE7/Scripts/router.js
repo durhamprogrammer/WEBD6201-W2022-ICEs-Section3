@@ -1,4 +1,3 @@
-let core;
 (function(core)
 {
     class Router
