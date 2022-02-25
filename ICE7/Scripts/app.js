@@ -440,43 +440,10 @@
         console.log("App Started!");
 
         LoadHeader();
-        //AjaxRequest("GET", "./Views/components/header.html", LoadHeader);
 
         LoadContent();
 
         LoadFooter();
-
-        /* switch (document.title) {
-          case "Home":
-            DisplayHomePage();
-            break;
-          case "Our Products":
-            DisplayProductsPage();
-            break;
-          case "Our Services":
-            DisplayServicesPage();
-            break;
-          case "About Us":
-            DisplayAboutPage();
-            break;
-          case "Contact Us":
-            DisplayContactPage();
-            break;
-          case "Contact-List":
-            DisplayContactListPage();
-            break;
-          //new
-          case "Edit":
-            displayEditPage();
-            break;
-          case "Login":
-            displayLoginPage();
-            break;
-          case "Register":
-            displayRegisterPage();
-            break;
-        } */
-       
     }
 
     window.addEventListener("load", Start);
