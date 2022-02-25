@@ -45,28 +45,36 @@
      * @param {string} html_data
      * @returns {void}
      */
-    function LoadHeader(html_data)
+    function LoadHeader()
     {
         // use AJAX to load the header content
+        $.get("./Views/components/header.html", function(html_data)
+        {
+            // inject Header content into the page
+            $("header").html(html_data);
 
-        // inject Header content into the page
-        $("header").html(html_data);
-
-
-        $(`li>a:contains(${document.title})`).addClass("active"); // update active link
-        
-        CheckLogin();
+            //TODO: this needs to be fixed
+            $(`li>a:contains(${document.title})`).addClass("active"); // update active link
+            
+            CheckLogin();
+        });
+       
     }
 
     /**
      * 
-     * @param {string} activeLink 
-     * @param {function} callback 
+     * 
      * @returns {void}
      */
-    function LoadContent(activeLink, callback)
+    function LoadContent()
     {
-
+        let page_name = router.ActiveLink; // alias for the Active Link
+        let callback = ActiveLinkCallBack(); // returns a reference to the correct function
+        $.get(`./Views/content/${page_name}.html`, function(html_date)
+        {
+            $("main").html(html_date);
+            callback(); // calling the correct function 
+        });
     }
 
     /**
@@ -75,7 +83,10 @@
      */
     function LoadFooter()
     {
-
+        $.get(`./Views/components/footer.html`, function(html_date)
+        {
+            $("footer").html(html_date);
+        });
     }
 
     function DisplayHomePage()
@@ -399,14 +410,13 @@
     }
 
     /**
+     * This method returns the appropriate function callback relative to the Active Link
      *
-     *
-     * @param {string} activeLink
      * @returns {function}
      */
-    function ActiveLinkCallBack(activeLink)
+    function ActiveLinkCallBack()
     {
-        switch(activeLink)
+        switch(router.ActiveLink)
         {
             case "home": return DisplayHomePage;
             case "about": return DisplayAboutPage;
@@ -429,10 +439,10 @@
     {
         console.log("App Started!");
 
-        //LoadHeader(router.ActiveLink);
+        LoadHeader();
         //AjaxRequest("GET", "./Views/components/header.html", LoadHeader);
 
-        LoadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
+        LoadContent();
 
         LoadFooter();
 
