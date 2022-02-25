@@ -42,7 +42,6 @@
     /**
      * This function loads the header.html content into a page
      *
-     * @param {string} html_data
      * @returns {void}
      */
     function LoadHeader()
@@ -52,6 +51,8 @@
         {
             // inject Header content into the page
             $("header").html(html_data);
+
+            document.title = router.ActiveLink.substring(0, 1).toUpperCase() + router.ActiveLink.substring(1);
 
             //TODO: this needs to be fixed
             $(`li>a:contains(${document.title})`).addClass("active"); // update active link
