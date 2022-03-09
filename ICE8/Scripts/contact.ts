@@ -8,32 +8,32 @@ namespace core
         private m_emailAddress: string;
 
         // public properties (getters and setters)
-        public get FullName()
+        public get FullName(): string
         {
             return this.m_fullName;
         }
 
-        public set FullName(fullName)
+        public set FullName(fullName: string)
         {
             this.m_fullName = fullName;
         }
 
-        public get ContactNumber()
+        public get ContactNumber(): string
         {
             return this.m_contactNumber;
         }
 
-        public set ContactNumber(contactNumber)
+        public set ContactNumber(contactNumber: string)
         {
             this.m_contactNumber = contactNumber;
         }
 
-        public get EmailAddress()
+        public get EmailAddress(): string
         {
             return this.m_emailAddress;
         }
 
-        public set EmailAddress(emailAddress)
+        public set EmailAddress(emailAddress: string)
         {
             this.m_emailAddress = emailAddress;
         }
