@@ -175,7 +175,7 @@
     function DisplayEditPage() {
         console.log("Edit Page");
         ContactFormValidation();
-        let page = location.hash.substring(1);
+        let page = router.LinkData;
         switch (page) {
             case "add":
                 {
@@ -187,10 +187,10 @@
                         let contactNumber = document.forms[0].contactNumber.value;
                         let emailAddress = document.forms[0].emailAddress.value;
                         AddContact(fullName, contactNumber, emailAddress);
-                        location.href = "/contact-list";
+                        LoadLink("contact-list");
                     });
                     $("#cancelButton").on("click", () => {
-                        location.href = "/contact-list";
+                        LoadLink("contact-list");
                     });
                 }
                 break;
@@ -207,19 +207,30 @@
                         contact.ContactNumber = $("#contactNumber").val();
                         contact.EmailAddress = $("#emailAddress").val();
                         localStorage.setItem(page, contact.serialize());
-                        location.href = "/contact-list";
+                        LoadLink("contact-list");
                     });
                     $("#cancelButton").on("click", () => {
-                        location.href = "/contact-list";
+                        LoadLink("contact-list");
                     });
                 }
                 break;
+        }
+    }
+    function CheckLogin() {
+        if (sessionStorage.getItem("user")) {
+            $("#login").html(`<a id="logout" class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>`);
+            $("#logout").on("click", function () {
+                sessionStorage.clear();
+                $("#login").html(`<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`);
+                LoadLink("login");
+            });
         }
     }
     function DisplayLoginPage() {
         console.log("Login Page");
         let messageArea = $("#messageArea");
         messageArea.hide();
+        AddLinkEvents("register");
         $("#loginButton").on("click", function () {
             let success = false;
             let newUser = new core.User();
@@ -236,7 +247,7 @@
                 if (success) {
                     sessionStorage.setItem("user", newUser.serialize());
                     messageArea.removeAttr("class").hide();
-                    location.href = "/contact-list";
+                    LoadLink("contact-list");
                 }
                 else {
                     $("#username").trigger("focus").trigger("select");
@@ -246,21 +257,12 @@
         });
         $("#cancelButton").on("click", function () {
             document.forms[0].reset();
-            location.href = "/home";
+            LoadLink("home");
         });
-    }
-    function CheckLogin() {
-        if (sessionStorage.getItem("user")) {
-            $("#login").html(`<a id="logout" class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>`);
-            $("#logout").on("click", function () {
-                sessionStorage.clear();
-                $("#login").html(`<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`);
-                LoadLink("login");
-            });
-        }
     }
     function DisplayRegisterPage() {
         console.log("Register Page");
+        AddLinkEvents("login");
     }
     function Display404Page() {
     }
@@ -284,7 +286,7 @@
     function Start() {
         console.log("App Started!");
         LoadHeader();
-        LoadContent();
+        LoadLink("home");
         LoadFooter();
     }
     window.addEventListener("load", Start);

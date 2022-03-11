@@ -319,7 +319,7 @@
 
         ContactFormValidation();
 
-        let page = location.hash.substring(1);
+        let page = router.LinkData;
 
         switch(page)
         {
@@ -338,12 +338,12 @@
                         let emailAddress = document.forms[0].emailAddress.value;
 
                         AddContact(fullName, contactNumber, emailAddress);
-                        location.href = "/contact-list";
+                        LoadLink("contact-list");
                     });
 
                     $("#cancelButton").on("click", () =>
                     {
-                        location.href = "/contact-list";
+                        LoadLink("contact-list");
                     });
                 }
                 break;
@@ -370,16 +370,42 @@
                         // replace the item in local storage
                         localStorage.setItem(page, contact.serialize() as string);
                         // go back to the contact list page (refresh)
-                        location.href = "/contact-list";
+                        LoadLink("contact-list");
                     });
 
                     $("#cancelButton").on("click", () =>
                     {
-                        location.href = "/contact-list";
+                        LoadLink("contact-list");
                     });
                     
                 }
                 break;
+        }
+    }
+
+    function CheckLogin(): void
+    {
+        // if user is logged in
+        if(sessionStorage.getItem("user"))
+        {
+            // swap out the login link for logout
+            $("#login").html(
+                `<a id="logout" class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>`
+            );
+            
+            $("#logout").on("click", function()
+            {
+                // perform logout
+                sessionStorage.clear();
+
+                 // swap out the logout link for login
+                $("#login").html(
+                    `<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`
+                );
+
+                // redirect back to login
+                LoadLink("login");
+            });
         }
     }
 
@@ -388,6 +414,8 @@
         console.log("Login Page");
         let messageArea =  $("#messageArea");
         messageArea.hide();
+
+        AddLinkEvents("register");
 
         $("#loginButton").on("click", function()
         {
@@ -424,7 +452,7 @@
                     messageArea.removeAttr("class").hide();
 
                     // redirect the user to the secure area of our site - contact-list.html
-                    location.href = "/contact-list";
+                    LoadLink("contact-list");
                 }
                 // else if bad credentials were entered...
                 else
@@ -442,39 +470,15 @@
             document.forms[0].reset();
 
             // return to the home page
-            location.href = "/home";
+            LoadLink("home");
         });
-    }
-
-    function CheckLogin(): void
-    {
-        // if user is logged in
-        if(sessionStorage.getItem("user"))
-        {
-            // swap out the login link for logout
-            $("#login").html(
-                `<a id="logout" class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>`
-            );
-            
-            $("#logout").on("click", function()
-            {
-                // perform logout
-                sessionStorage.clear();
-
-                 // swap out the logout link for login
-                $("#login").html(
-                    `<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`
-                );
-
-                // redirect back to login
-                LoadLink("login");
-            });
-        }
     }
 
     function DisplayRegisterPage(): void
     {
         console.log("Register Page");
+
+        AddLinkEvents("login");
     }
 
     function Display404Page(): void
@@ -519,7 +523,7 @@
 
         LoadHeader();
 
-        LoadContent();
+        LoadLink("home");
 
         LoadFooter();
     }
