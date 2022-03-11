@@ -2,42 +2,95 @@
 // AKA -- Anonymous Self-Executing Function
 (function()
 {
-    /**
-     * This function uses AJAX to open a connection to the server and returns 
-     * the data payload to the callback function
-     *
-     * @param {string} method
-     * @param {string} url
-     * @param {Function} callback
-     * @returns {void}
-     */
-    function AjaxRequest(method: string, url: string, callback: Function): void
+    function AuthGuard(): void
     {
-        // AJAX STEPS
-        // Step 1. - instantiate an XHR Object
-        let XHR = new XMLHttpRequest();
-
-        // Step 2. - add an event listener for readystatechange
-        XHR.addEventListener("readystatechange", () =>
+        let protected_routes: string[] = [
+            "contact-list"
+        ];
+    
+    
+        if(protected_routes.indexOf(router.ActiveLink) > -1)
         {
-            if(XHR.readyState === 4 && XHR.status === 200)
+            // check if user is logged in
+            if(!sessionStorage.getItem("user"))
             {
-                if(typeof callback === "function")
-                {
-                    callback(XHR.responseText);
-                }
-                else
-                {
-                    console.error("ERROR: callback not a function");
-                }
+                // if not...change the active link to the  login page
+                router.ActiveLink = "login"
             }
+        }
+    }
+    
+    function LoadLink(link: string, data: string = ""): void
+    {
+        router.ActiveLink = link;
+
+        AuthGuard();
+
+        router.LinkData = data;
+        history.pushState({}, "", router.ActiveLink);
+        
+        // capitalize active link and set document title to it
+        document.title = router.ActiveLink.substring(0, 1).toUpperCase() + router.ActiveLink.substring(1);
+
+        // remove all active Nav Links
+        $("ul>li>a").each(function()
+        {
+            $(this).removeClass("active");
         });
 
-        // Step 3. - Open a connection to the server
-        XHR.open(method, url);
+        $(`li>a:contains(${document.title})`).addClass("active"); // updates the Active link on Navigation items
 
-        // Step 4. - Send the request to the server
-        XHR.send();
+        LoadContent();
+    }
+
+    function AddNavigationEvents(): void
+    {
+
+        let NavLinks = $("ul>li>a"); // find all Navigation Links
+
+        NavLinks.off("click");
+        NavLinks.off("mouseover");
+
+        // loop through each Navigation link and load appropriate content on click
+        NavLinks.on("click", function()
+        {
+            LoadLink($(this).attr("data") as string);
+        });
+
+        NavLinks.on("mouseover", function()
+        {
+            $(this).css("cursor", "pointer");
+        });
+    }
+
+    function AddLinkEvents(link: string): void
+    {
+        let linkQuery = $(`a.link[data=${link}]`);
+        // remove all link events
+        linkQuery.off("click");
+        linkQuery.off("mouseover");
+        linkQuery.off("mouseout");
+
+        // css adjustments for links
+        linkQuery.css("text-decoration", "underline");
+        linkQuery.css("color", "blue");
+
+        // add link events
+        linkQuery.on("click", function()
+        {
+            LoadLink(`${link}`);
+        });
+
+        linkQuery.on("mouseover", function()
+        {
+            $(this).css('cursor', 'pointer');
+            $(this).css('font-weight', 'bold');
+        });
+
+        linkQuery.on("mouseout", function()
+        {
+            $(this).css('font-weight', 'normal');
+        });
     }
 
     /**
