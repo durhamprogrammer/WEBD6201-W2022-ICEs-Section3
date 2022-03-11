@@ -106,13 +106,10 @@
             // inject Header content into the page
             $("header").html(html_data);
 
-            document.title = router.ActiveLink.substring(0, 1).toUpperCase() + router.ActiveLink.substring(1);
-
-            $(`li>a:contains(${document.title})`).addClass("active"); // update active link
+            AddNavigationEvents();
             
             CheckLogin();
         });
-       
     }
 
     /**
@@ -148,11 +145,11 @@
         console.log("Home Page");
         $("#AboutUsButton").on("click", () => 
         {
-            location.href = "/about";
+            LoadLink("about");
         });
     
         $("main").append(`<p id="MainParagraph" class="mt-3">This is the Main Paragraph</p>`);
-        $("body").append(`<article class="container">
+        $("main").append(`<article>
         <p id="ArticleParagraph" class ="mt-3">This is the Article Paragraph</p>
         </article>`);
     }
@@ -227,6 +224,12 @@
     {
         console.log("Contact Page");
 
+        $("a[data='contact-list']").off("click");
+        $("a[data='contact-list']").on("click", function()
+        {
+            LoadLink("contact-list");
+        });
+
         ContactFormValidation();
        
         let sendButton = document.getElementById("sendButton") as HTMLElement;
@@ -292,18 +295,18 @@
                 {
                     localStorage.removeItem($(this).val() as string)
                 }
-                location.href = "/contact-list";
+                LoadLink("contact-list");
             });
 
             $("button.edit").on("click", function()
             {
-                location.href = "/edit#" + $(this).val();
+                LoadLink("edit", $(this).val() as string);
             });
         }
 
         $("#addButton").on("click", ()=>
         {
-            location.href = "/edit#add";
+            LoadLink("edit", "add");
         });
     }
 
@@ -458,8 +461,13 @@
                 // perform logout
                 sessionStorage.clear();
 
+                 // swap out the logout link for login
+                $("#login").html(
+                    `<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`
+                );
+
                 // redirect back to login
-                location.href = "/login";
+                LoadLink("login");
             });
         }
     }
