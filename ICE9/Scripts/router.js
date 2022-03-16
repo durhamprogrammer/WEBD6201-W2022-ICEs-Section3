@@ -3,6 +3,7 @@ var core;
 (function (core) {
     class Router {
         m_activeLink;
+        m_linkData;
         m_routingTable;
         get ActiveLink() {
             return this.m_activeLink;
@@ -10,8 +11,15 @@ var core;
         set ActiveLink(link) {
             this.m_activeLink = link;
         }
+        get LinkData() {
+            return this.m_linkData;
+        }
+        set LinkData(data) {
+            this.m_linkData = data;
+        }
         constructor() {
             this.m_activeLink = "";
+            this.m_linkData = "";
             this.m_routingTable = [];
         }
         Add(route) {
@@ -51,12 +59,4 @@ router.AddTable([
 ]);
 let route = location.pathname;
 router.ActiveLink = (router.Find(route) > -1) ? (route == "/") ? "home" : route.substring(1) : "404";
-(function (location) {
-    if (location.search[1] === '/') {
-        let decoded = location.search.slice(1).split('&').map(function (s) {
-            return s.replace(/~and~/g, '&');
-        }).join('?');
-        window.history.replaceState(null, "", location.pathname.slice(0, -1) + decoded + location.hash);
-    }
-}(window.location));
 //# sourceMappingURL=router.js.map

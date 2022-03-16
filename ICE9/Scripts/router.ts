@@ -4,6 +4,7 @@ namespace core
     {
         // private instance members
         private m_activeLink: string;
+        private m_linkData: string;
         private m_routingTable: string[];
 
         // public properties (getters and setters)
@@ -19,10 +20,26 @@ namespace core
         /**
          * @param {string} link
          */
-        public set ActiveLink(link)
+        public set ActiveLink(link: string)
         {
             this.m_activeLink = link;
         }
+
+        /**
+         * @returns {string}
+         */
+         public get LinkData(): string
+         {
+             return this.m_linkData;
+         }
+ 
+         /**
+          * @param {string} link
+          */
+         public set LinkData(data: string)
+         {
+             this.m_linkData = data;
+         }
 
         // constructor
 
@@ -34,6 +51,7 @@ namespace core
         constructor()
         {
             this.m_activeLink = "";
+            this.m_linkData = "";
             this.m_routingTable = []; // creates an empty string array container
         }
 
@@ -129,16 +147,3 @@ let route: string = location.pathname; // alias for location.pathname
 
 // if route is found in the Routing Table
 router.ActiveLink = (router.Find(route) > -1) ? (route == "/") ? "home" : route.substring(1) : "404";
-
-// hack for GitHub Pages
-(function(location: Location) {
-    if (location.search[1] === '/' ) 
-    {
-      let decoded = location.search.slice(1).split('&').map(function(s) 
-      { 
-        return s.replace(/~and~/g, '&')
-      }).join('?');
-      window.history.replaceState(null, "", location.pathname.slice(0, -1) + decoded + location.hash);
-    }
-  }(window.location));
-//-- End Single Page Apps for GitHub Pages -->
