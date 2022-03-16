@@ -1,7 +1,7 @@
-const fs = require('fs');
-const fsPromises = fs.promises;
+import { promises } from 'fs';
+const fsPromises = promises;
 
-module.exports.getData = async function()
+export async function getData()
 {
     return await fsPromises.readFile("./Data/users.json", "utf8", function(err, data)
     {

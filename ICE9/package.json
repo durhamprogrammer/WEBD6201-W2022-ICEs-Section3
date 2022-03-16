@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "Tom Tsiliopoulos",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@popperjs/core": "^2.11.2",

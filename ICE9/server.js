@@ -1,15 +1,13 @@
-const users = require('./users.data');
-const hello = require('./hello');
+import { getData } from './users.data.js';
+import { sayHello, sayGoodbye } from './hello.js';
 
-users.getData()
-    .then(function(data)
-    {
-        hello.sayHello();
-        console.log(data);
-        hello.sayGoodbye();
-    })
-    .catch(function(err)
-    {
-        console.error("ERROR: User data not returned!");
-    });
+getData()
+  .then(function (data) {
+    sayHello();
+    console.log(data);
+    sayGoodbye();
+  })
+  .catch(function (err) {
+    console.error("ERROR: User data not returned!");
+  });
 
