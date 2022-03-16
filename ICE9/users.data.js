@@ -1,14 +1,15 @@
 const fs = require('fs');
+const fsPromises = fs.promises;
 
-module.exports.getData = function()
+module.exports.getData = async function()
 {
-    fs.readFile("./Data/users.json", "utf8", function(err, data)
+    return await fsPromises.readFile("./Data/users.json", "utf8", function(err, data)
     {
         if(err)
         {
             console.error(err.message);
         }
-        console.log(data);
+        return data;
     });
 }
 
