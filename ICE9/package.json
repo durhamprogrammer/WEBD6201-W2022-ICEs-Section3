@@ -1,7 +1,7 @@
 {
-  "name": "webd6201-w2022-ice7",
+  "name": "webd6201-w2022-ice9",
   "version": "1.0.0",
-  "description": "demo project for ice7",
+  "description": "demo project for ice9",
   "main": "index.js",
   "author": "Tom Tsiliopoulos",
   "license": "MIT",
@@ -12,6 +12,7 @@
     "jquery": "^3.6.0"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.14"
+    "@types/jquery": "^3.5.14",
+    "@types/node": "^17.0.21"
   }
 }
