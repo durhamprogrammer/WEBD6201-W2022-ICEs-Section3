@@ -1,14 +1,17 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const users_data_js_1 = require("./users.data.js");
-const hello_js_1 = require("./hello.js");
-(0, users_data_js_1.getData)()
-    .then((data) => {
-    (0, hello_js_1.sayHello)();
-    console.log(data);
-    (0, hello_js_1.sayGoodbye)();
-})
-    .catch((err) => {
-    console.error("ERROR: User data not returned!: " + err.message);
+const http_1 = __importDefault(require("http"));
+const hostname = '127.0.0.1';
+const port = 3000;
+const server = http_1.default.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello, World!');
+});
+server.listen(port, hostname, function () {
+    console.log(`Server running at http://${hostname}:${port}/`);
 });
 //# sourceMappingURL=server.js.map

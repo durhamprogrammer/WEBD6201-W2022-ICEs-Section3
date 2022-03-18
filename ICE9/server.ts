@@ -1,13 +1,18 @@
-import { getData } from './users.data.js';
-import { sayHello, sayGoodbye } from './hello.js';
+import http from 'http';
 
-getData()
-  .then((data) => {
-    sayHello();
-    console.log(data);
-    sayGoodbye();
-  })
-  .catch((err) => {
-    console.error("ERROR: User data not returned!: "  + err.message);
-  });
+const hostname: string = '127.0.0.1';
+const port: number = 3000;
 
+// create a server object (Immutable)
+const server = http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => 
+{
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello, World!');
+});
+
+// creating an event listener
+server.listen(port, hostname, function() 
+{
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
