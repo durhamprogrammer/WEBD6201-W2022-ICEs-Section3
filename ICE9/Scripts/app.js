@@ -61,8 +61,9 @@
     function LoadContent() {
         let page_name = router.ActiveLink;
         let callback = ActiveLinkCallBack();
-        $.get(`./Views/content/${page_name}.html`, function (html_date) {
-            $("main").html(html_date);
+        $.get(`./Views/content/${page_name}.html`, function (html_data) {
+            $("main").html(html_data);
+            CheckLogin();
             callback();
         });
     }
@@ -222,6 +223,7 @@
             $("#logout").on("click", function () {
                 sessionStorage.clear();
                 $("#login").html(`<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`);
+                AddNavigationEvents();
                 LoadLink("login");
             });
         }

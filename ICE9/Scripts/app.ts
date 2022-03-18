@@ -121,9 +121,10 @@
     {
         let page_name = router.ActiveLink; // alias for the Active Link
         let callback = ActiveLinkCallBack(); // returns a reference to the correct function
-        $.get(`./Views/content/${page_name}.html`, function(html_date)
+        $.get(`./Views/content/${page_name}.html`, function(html_data)
         {
-            $("main").html(html_date);
+            $("main").html(html_data);
+            CheckLogin();
             callback(); // calling the correct function 
         });
     }
@@ -402,6 +403,8 @@
                 $("#login").html(
                     `<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`
                 );
+
+                AddNavigationEvents();
 
                 // redirect back to login
                 LoadLink("login");
