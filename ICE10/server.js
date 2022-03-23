@@ -3,32 +3,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const http_1 = __importDefault(require("http"));
+const express_1 = __importDefault(require("express"));
 const fs_1 = __importDefault(require("fs"));
 const mime_types_1 = __importDefault(require("mime-types"));
-const hostname = 'localhost';
-const port = 3000;
 let lookup = mime_types_1.default.lookup;
-const server = http_1.default.createServer((req, res) => {
-    let parsedURL = new URL(req.url, "http://" + hostname + ":" + port);
-    let path = parsedURL.pathname.replace(/^\/+|\/+$/g, "");
-    if (path == "") {
-        path = "index.html";
+const app = (0, express_1.default)();
+const port = process.env.PORT || 3000;
+app.use('/', function (req, res) {
+    let path = req.url;
+    console.log(path);
+    if (path == "/" || path == "/home") {
+        path = "/index.html";
     }
-    let file = __dirname + "\\" + path;
-    fs_1.default.readFile(file, function (err, content) {
+    fs_1.default.readFile(__dirname + path, function (err, data) {
         if (err) {
             res.writeHead(404);
-            res.end(JSON.stringify(err));
+            res.end("ERROR: 404 - File not found!");
             return;
         }
         res.setHeader("X-Content-Type-Options", "nosniff");
-        let mimeType = lookup(path);
-        res.writeHead(200, "", { "Content-Type": mimeType });
-        res.end(content);
+        let mimeType = lookup(path.substring(1));
+        res.writeHead(200, { "Content-Type": mimeType });
+        res.end(data);
     });
 });
-server.listen(port, hostname, function () {
-    console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(port, function () {
+    console.log(`Server listening on port: ${port}`);
 });
+exports.default = app;
 //# sourceMappingURL=server.js.map
