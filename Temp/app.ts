@@ -4,9 +4,8 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 
-//TODO: need to convert
-let indexRouter = require("./Routes/index");
-let usersRouter = require("./Routes/users");
+import indexRouter from "./Routes/index";
+import usersRouter from "./Routes/users";
 
 const app = express();
 
