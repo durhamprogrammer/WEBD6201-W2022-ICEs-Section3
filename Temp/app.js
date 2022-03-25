@@ -18,6 +18,7 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.static(path_1.default.join(__dirname, "Client")));
+app.use(express_1.default.static(path_1.default.join(__dirname, "node_modules")));
 app.use("/", index_1.default);
 app.use("/users", users_1.default);
 app.use(function (req, res, next) {
