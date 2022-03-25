@@ -40,6 +40,8 @@
 
         $(`li>a:contains(${document.title})`).addClass("active"); // updates the Active link on Navigation items
 
+        CheckLogin();
+
         LoadContent();
     }
 
@@ -402,6 +404,8 @@
                 $("#login").html(
                     `<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`
                 );
+
+                AddNavigationEvents();
 
                 // redirect back to login
                 LoadLink("login");

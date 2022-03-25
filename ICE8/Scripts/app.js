@@ -20,6 +20,7 @@
             $(this).removeClass("active");
         });
         $(`li>a:contains(${document.title})`).addClass("active");
+        CheckLogin();
         LoadContent();
     }
     function AddNavigationEvents() {
@@ -222,6 +223,7 @@
             $("#logout").on("click", function () {
                 sessionStorage.clear();
                 $("#login").html(`<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`);
+                AddNavigationEvents();
                 LoadLink("login");
             });
         }

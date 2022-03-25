@@ -54,7 +54,6 @@
 
             document.title = router.ActiveLink.substring(0, 1).toUpperCase() + router.ActiveLink.substring(1);
 
-            //TODO: this needs to be fixed
             $(`li>a:contains(${document.title})`).addClass("active"); // update active link
             
             CheckLogin();
