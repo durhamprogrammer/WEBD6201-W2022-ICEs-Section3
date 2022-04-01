@@ -76,6 +76,30 @@ router.get('/add', function(req, res, next)
   res.render('index', { title: 'Add', page: 'edit', contact: '', displayName: '' });
 });
 
+/* Process the Add Request */
+router.post('/add', function(req, res, next) 
+{
+  // instantiate a new contact to add
+  let newContact = new Contact
+  ({
+    "FullName": req.body.fullName,
+    "ContactNumber": req.body.contactNumber,
+    "EmailAddress": req.body.emailAddress
+  });
+
+  // db.contacts.insert({contact data goes here...})
+  Contact.create(newContact, function(err: ErrorCallback)
+  {
+    if(err)
+    {
+      console.error(err);
+      res.end(err);
+    }
+    // newContact has been added to the db ->  now go back to the contact-list page
+    res.redirect('/contact-list');
+  }); 
+});
+
 /* Display the Edit Page with Data */
 router.get('/edit/:id', function(req, res, next) 
 {
@@ -92,6 +116,25 @@ router.get('/edit/:id', function(req, res, next)
 
     // show the edit view with the data
     res.render('index', { title: 'Edit', page: 'edit', contact: contactToEdit, displayName: '' });
+  });
+});
+
+/* Process the delete request */
+router.get('/delete/:id', function(req, res, next) 
+{
+  let id = req.params.id;
+
+  // db.contacts.remove({"_id":id})
+  Contact.remove({_id: id}, function(err)
+  {
+    if(err)
+    {
+      console.error(err);
+      res.end(err);
+    }
+
+    // delete was successful -> go back to the contact-list
+    res.redirect('/contact-list');
   });
 });
 
