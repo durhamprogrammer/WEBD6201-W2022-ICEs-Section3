@@ -89,50 +89,17 @@
         });
     }
     function DisplayContactListPage() {
+        console.log("Contact-list page");
+        $("a.delete").on("click", function (event) {
+            if (!confirm("Are you sure?")) {
+                event.preventDefault();
+                location.href = "/contact-list";
+            }
+        });
     }
     function DisplayEditPage() {
-        console.log("Edit Page");
+        console.log("Add/Edit Page");
         ContactFormValidation();
-        let page = location.hash.substring(1);
-        switch (page) {
-            case "add":
-                {
-                    $("main>h1").text("Add Contact");
-                    $("#editButton").html(`<i class="fas fa-plus-circle fa-lg"></i> Add`);
-                    $("#editButton").on("click", (event) => {
-                        event.preventDefault();
-                        let fullName = document.forms[0].fullName.value;
-                        let contactNumber = document.forms[0].contactNumber.value;
-                        let emailAddress = document.forms[0].emailAddress.value;
-                        AddContact(fullName, contactNumber, emailAddress);
-                        location.href = "/contact-list";
-                    });
-                    $("#cancelButton").on("click", () => {
-                        location.href = "/contact-list";
-                    });
-                }
-                break;
-            default:
-                {
-                    let contact = new core.Contact();
-                    contact.deserialize(localStorage.getItem(page));
-                    $("#fullName").val(contact.FullName);
-                    $("#contactNumber").val(contact.ContactNumber);
-                    $("#emailAddress").val(contact.EmailAddress);
-                    $("#editButton").on("click", (event) => {
-                        event.preventDefault();
-                        contact.FullName = $("#fullName").val();
-                        contact.ContactNumber = $("#contactNumber").val();
-                        contact.EmailAddress = $("#emailAddress").val();
-                        localStorage.setItem(page, contact.serialize());
-                        location.href = "/contact-list";
-                    });
-                    $("#cancelButton").on("click", () => {
-                        location.href = "/contact-list";
-                    });
-                }
-                break;
-        }
     }
     function CheckLogin() {
         if (sessionStorage.getItem("user")) {
@@ -193,6 +160,12 @@
             case "about":
                 DisplayAboutPage();
                 break;
+            case "edit":
+                DisplayEditPage();
+                break;
+            case "add":
+                DisplayEditPage();
+                break;
             case "products":
                 DisplayProductsPage();
                 break;
@@ -201,6 +174,9 @@
                 break;
             case "contact":
                 DisplayContactPage();
+                break;
+            case "contact-list":
+                DisplayContactListPage();
                 break;
             case "login":
                 DisplayLoginPage();
