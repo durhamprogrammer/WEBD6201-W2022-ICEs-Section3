@@ -159,7 +159,7 @@
 
     function DisplayContactListPage(): void
     {
-        if(localStorage.length > 0)
+        /* if(localStorage.length > 0)
         {
             let contactList = document.getElementById("contactList") as HTMLElement;
 
@@ -209,7 +209,7 @@
         $("#addButton").on("click", ()=>
         {
             location.href = "/edit#add";
-        });
+        }); */
     }
 
     /**
@@ -417,14 +417,6 @@
             break;
         case "contact": 
             DisplayContactPage();
-            break;
-        case "contact-list": 
-            AuthGuard();
-            DisplayContactListPage();
-            break;
-        case "edit": 
-            AuthGuard();
-            DisplayEditPage();
             break;
         case "login": 
             DisplayLoginPage();

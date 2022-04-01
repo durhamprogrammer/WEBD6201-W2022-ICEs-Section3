@@ -56,7 +56,7 @@ router.get('/register', function(req, res, next)
 router.get('/contact-list', function(req, res, next) 
 {
   // display contacts from the db
-  Contact.find(function(err, contacts)
+  Contact.find(function(err, contactList)
   {
     if(err)
     {
@@ -64,15 +64,35 @@ router.get('/contact-list', function(req, res, next)
       res.end();
     }
 
-    console.log(contacts);
+    res.render('index', { title: 'Contact-List', page: 'contact-list', contacts: contactList, displayName: '' });
   })
 
-  res.render('index', { title: 'Contact-List', page: 'contact-list', displayName: '' });
+  
 });
 
-router.get('/edit', function(req, res, next) 
+/* Displays the Add Page */
+router.get('/add', function(req, res, next) 
 {
-  res.render('index', { title: 'Edit', page: 'edit', displayName: '' });
+  res.render('index', { title: 'Add', page: 'edit', contact: '', displayName: '' });
+});
+
+/* Display the Edit Page with Data */
+router.get('/edit/:id', function(req, res, next) 
+{
+  let id = req.params.id;
+
+  // pass the id to the db and read it in
+  Contact.findById(id, {}, {}, function(err, contactToEdit)
+  {
+    if(err)
+    {
+      console.error(err);
+      res.end(err);
+    }
+
+    // show the edit view with the data
+    res.render('index', { title: 'Edit', page: 'edit', contact: contactToEdit, displayName: '' });
+  });
 });
 
 

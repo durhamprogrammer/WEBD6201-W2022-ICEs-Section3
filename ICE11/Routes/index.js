@@ -31,17 +31,26 @@ router.get('/register', function (req, res, next) {
     res.render('index', { title: 'Register', page: 'register', displayName: '' });
 });
 router.get('/contact-list', function (req, res, next) {
-    contact_1.default.find(function (err, contacts) {
+    contact_1.default.find(function (err, contactList) {
         if (err) {
             console.error("Encountered an Error reading from the Database: " + err.message);
             res.end();
         }
-        console.log(contacts);
+        res.render('index', { title: 'Contact-List', page: 'contact-list', contacts: contactList, displayName: '' });
     });
-    res.render('index', { title: 'Contact-List', page: 'contact-list', displayName: '' });
 });
-router.get('/edit', function (req, res, next) {
-    res.render('index', { title: 'Edit', page: 'edit', displayName: '' });
+router.get('/add', function (req, res, next) {
+    res.render('index', { title: 'Add', page: 'edit', contact: '', displayName: '' });
+});
+router.get('/edit/:id', function (req, res, next) {
+    let id = req.params.id;
+    contact_1.default.findById(id, {}, {}, function (err, contactToEdit) {
+        if (err) {
+            console.error(err);
+            res.end(err);
+        }
+        res.render('index', { title: 'Edit', page: 'edit', contact: contactToEdit, displayName: '' });
+    });
 });
 exports.default = router;
 //# sourceMappingURL=index.js.map
