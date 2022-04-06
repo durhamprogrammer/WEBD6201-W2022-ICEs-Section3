@@ -32,6 +32,7 @@ const path_1 = __importDefault(require("path"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
 const passport_local_1 = __importDefault(require("passport-local"));
 const connect_flash_1 = __importDefault(require("connect-flash"));
@@ -55,8 +56,13 @@ app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
-app.use(express_1.default.static(path_1.default.join(__dirname, "../Client")));
-app.use(express_1.default.static(path_1.default.join(__dirname, "../node_modules")));
+app.use(express_1.default.static(path_1.default.join(__dirname, "../../Client")));
+app.use(express_1.default.static(path_1.default.join(__dirname, "../../node_modules")));
+app.use((0, express_session_1.default)({
+    secret: DBConfig.SessionSecret,
+    saveUninitialized: false,
+    resave: false
+}));
 app.use((0, connect_flash_1.default)());
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
