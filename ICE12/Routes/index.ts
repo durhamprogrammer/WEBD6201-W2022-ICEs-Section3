@@ -88,7 +88,7 @@ router.post('/add', function(req, res, next)
   });
 
   // db.contacts.insert({contact data goes here...})
-  Contact.create(newContact, function(err: ErrorCallback)
+  Contact.create(newContact, function(err)
   {
     if(err)
     {
