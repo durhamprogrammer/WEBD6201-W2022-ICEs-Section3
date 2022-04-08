@@ -42,13 +42,13 @@ router.get('/contact', function(req, res, next)
 /* GET login page. */
 router.get('/login', function(req, res, next) 
 {
-  res.render('index', { title: 'Login', page: 'login', displayName: '' });
+  res.render('index', { title: 'Login', page: 'login', messages: '', displayName: '' });
 });
 
 /* GET register page. */
 router.get('/register', function(req, res, next) 
 {
-  res.render('index', { title: 'Register', page: 'register', displayName: '' });
+  res.render('index', { title: 'Register', page: 'register', messages: '', displayName: '' });
 });
 
 /* Temporary Routes - Contact-List Related pages */

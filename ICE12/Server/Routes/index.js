@@ -25,10 +25,10 @@ router.get('/contact', function (req, res, next) {
     res.render('index', { title: 'Contact Us', page: 'contact', displayName: '' });
 });
 router.get('/login', function (req, res, next) {
-    res.render('index', { title: 'Login', page: 'login', displayName: '' });
+    res.render('index', { title: 'Login', page: 'login', messages: '', displayName: '' });
 });
 router.get('/register', function (req, res, next) {
-    res.render('index', { title: 'Register', page: 'register', displayName: '' });
+    res.render('index', { title: 'Register', page: 'register', messages: '', displayName: '' });
 });
 router.get('/contact-list', function (req, res, next) {
     contact_1.default.find(function (err, contactList) {
