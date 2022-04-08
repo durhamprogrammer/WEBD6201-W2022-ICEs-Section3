@@ -4,41 +4,42 @@ import passport from 'passport';
 
 import Contact from "../Models/contact";
 import User from "../Models/user";
+import { UserDisplayName, AuthGuard } from '../Util/index';
 
 /* GET home page. */
 router.get('/', function(req, res, next) 
 {
-  res.render('index', { title: 'Home', page: 'home', displayName: '' });
+  res.render('index', { title: 'Home', page: 'home', displayName: UserDisplayName(req) });
 });
 
 /* GET home page. */
 router.get('/home', function(req, res, next) 
 {
-  res.render('index', { title: 'Home', page: 'home', displayName: '' });
+  res.render('index', { title: 'Home', page: 'home', displayName: UserDisplayName(req) });
 });
 
 /* GET about page. */
 router.get('/about', function(req, res, next) 
 {
-  res.render('index', { title: 'About Us', page: 'about', displayName: '' });
+  res.render('index', { title: 'About Us', page: 'about', displayName: UserDisplayName(req) });
 });
 
 /* GET services page. */
 router.get('/services', function(req, res, next) 
 {
-  res.render('index', { title: 'Our Services', page: 'services', displayName: '' });
+  res.render('index', { title: 'Our Services', page: 'services', displayName: UserDisplayName(req) });
 });
 
 /* GET products page. */
 router.get('/products', function(req, res, next) 
 {
-  res.render('index', { title: 'Our Products', page: 'products', displayName: '' });
+  res.render('index', { title: 'Our Products', page: 'products', displayName: UserDisplayName(req) });
 });
 
 /* GET contact page. */
 router.get('/contact', function(req, res, next) 
 {
-  res.render('index', { title: 'Contact Us', page: 'contact', displayName: '' });
+  res.render('index', { title: 'Contact Us', page: 'contact', displayName: UserDisplayName(req) });
 });
 
 /* GET login page. */
@@ -47,7 +48,7 @@ router.get('/login', function(req, res, next)
   if(!req.user)
   {
     return res.render('index', 
-    { title: 'Login', page: 'login', messages: req.flash('loginMessage'), displayName: '' });
+    { title: 'Login', page: 'login', messages: req.flash('loginMessage'), displayName: UserDisplayName(req) });
   }
   
   return res.redirect('/contact-list');
@@ -92,7 +93,7 @@ router.get('/register', function(req, res, next)
   if(!req.user)
   {
     return res.render('index', 
-    { title: 'Register', page: 'register', messages: req.flash('registerMessage'), displayName: '' });
+    { title: 'Register', page: 'register', messages: req.flash('registerMessage'), displayName: UserDisplayName(req) });
   }
 
   return res.redirect('/contact-list');
@@ -144,7 +145,7 @@ router.get('/logout', function(req, res, next)
 
 /* Temporary Routes - Contact-List Related pages */
 /* GET contact-list page. */
-router.get('/contact-list', function(req, res, next) 
+router.get('/contact-list', AuthGuard, function(req, res, next) 
 {
   // display contacts from the db
   Contact.find(function(err, contactList)
@@ -155,18 +156,18 @@ router.get('/contact-list', function(req, res, next)
       res.end();
     }
 
-    res.render('index', { title: 'Contact-List', page: 'contact-list', contacts: contactList, displayName: '' });
+    res.render('index', { title: 'Contact-List', page: 'contact-list', contacts: contactList, displayName: UserDisplayName(req) });
   });
 });
 
 /* Displays the Add Page */
-router.get('/add', function(req, res, next) 
+router.get('/add', AuthGuard, function(req, res, next) 
 {
-  res.render('index', { title: 'Add', page: 'edit', contact: '', displayName: '' });
+  res.render('index', { title: 'Add', page: 'edit', contact: '', displayName: UserDisplayName(req) });
 });
 
 /* Process the Add Request */
-router.post('/add', function(req, res, next) 
+router.post('/add', AuthGuard, function(req, res, next) 
 {
   // instantiate a new contact to add
   let newContact = new Contact
@@ -190,7 +191,7 @@ router.post('/add', function(req, res, next)
 });
 
 /* Display the Edit Page with Data */
-router.get('/edit/:id', function(req, res, next) 
+router.get('/edit/:id', AuthGuard, function(req, res, next) 
 {
   let id = req.params.id;
 
@@ -204,12 +205,12 @@ router.get('/edit/:id', function(req, res, next)
     }
 
     // show the edit view with the data
-    res.render('index', { title: 'Edit', page: 'edit', contact: contactToEdit, displayName: '' });
+    res.render('index', { title: 'Edit', page: 'edit', contact: contactToEdit, displayName: UserDisplayName(req) });
   });
 });
 
 /* Process the Edit request */
-router.post('/edit/:id', function(req, res, next) 
+router.post('/edit/:id', AuthGuard, function(req, res, next) 
 {
   let id = req.params.id;
 
@@ -237,7 +238,7 @@ router.post('/edit/:id', function(req, res, next)
 });
 
 /* Process the delete request */
-router.get('/delete/:id', function(req, res, next) 
+router.get('/delete/:id', AuthGuard, function(req, res, next) 
 {
   let id = req.params.id;
 
