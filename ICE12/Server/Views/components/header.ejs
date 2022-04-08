@@ -21,9 +21,15 @@
           <li class="nav-item">
             <a class="nav-link" href="/contact"><i class="fas fa-envelope"></i> Contact</a>
           </li>
-          <li class="nav-item" id="login">
-            <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+          <% if(displayName) { %>
+          <li class="nav-item" id="logout">
+            <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
           </li>
+          <% } else { %>
+            <li class="nav-item" id="login">
+              <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+            </li>
+          <% } %>  
         </ul>
       </div>
     </div>
