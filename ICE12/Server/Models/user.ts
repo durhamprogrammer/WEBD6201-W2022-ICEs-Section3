@@ -6,7 +6,7 @@ const UserSchema = new Schema
 ({
     DisplayName: String,
     EmailAddress: String,
-    Username: String,
+    username: String,
     Created:
     {
         type: Date,

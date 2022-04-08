@@ -9,7 +9,7 @@ const passport_local_mongoose_1 = __importDefault(require("passport-local-mongoo
 const UserSchema = new Schema({
     DisplayName: String,
     EmailAddress: String,
-    Username: String,
+    username: String,
     Created: {
         type: Date,
         default: Date.now()
