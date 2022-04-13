@@ -3,7 +3,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import passport from 'passport';
 
 import User from "../Models/user";
-import { UserDisplayName } from '../Util/index';
+import {GenerateToken, UserDisplayName } from '../Util/index';
 
 // Display Pages Functions
 
@@ -57,6 +57,11 @@ export function ProcessLoginPage(req: Request, res: Response, next: NextFunction
         console.error(err);
         return next(err);
       }
+
+      const authToken = GenerateToken(user);
+
+      //if we had a front-end (like Angular or React or Vue)
+      // return res.json({success: true, msg: 'User Logged in Successfully!', user: user, token: authToken});
 
       return res.redirect('/contact-list');
     });
