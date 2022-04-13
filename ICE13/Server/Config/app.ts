@@ -125,7 +125,7 @@ app.use(function (err: createError.HttpError, req: express.Request, res: express
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render("error", {message: err.message, error: err, title: '', page: '', displayName: ''});
 });
 
 export default app;
