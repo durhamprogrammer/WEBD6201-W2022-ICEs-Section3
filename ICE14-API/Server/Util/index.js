@@ -52,7 +52,7 @@ function GenerateToken(user) {
         username: user.username
     };
     const jwtOptions = {
-        expiresIn: 604800
+        expiresIn: 1800
     };
     return jsonwebtoken_1.default.sign(payload, DBConfig.SessionSecret, jwtOptions);
 }

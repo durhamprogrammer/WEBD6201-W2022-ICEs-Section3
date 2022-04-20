@@ -107,7 +107,7 @@ passport.use(strategy);
 
 // Router Configuration
 app.use("/api", authRouter);
-app.use("/api", contactListRouter);
+app.use("/api", passport.authenticate('jwt', {session: false}), contactListRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
