@@ -29,7 +29,6 @@ let localStrategy = passportLocal.Strategy; // alias
 import User from '../Models/user';
 
 // App Configuration (Routing, etc)
-import indexRouter from "../Routes/index";
 import authRouter from "../Routes/auth";
 import contactListRouter from "../Routes/contact-list";
 
@@ -107,7 +106,6 @@ let strategy = new JWTStrategy(jwtOptions, function(jwt_payload, done)
 passport.use(strategy);
 
 // Router Configuration
-app.use("/", indexRouter);
 app.use("/", authRouter);
 app.use("/", contactListRouter);
 
