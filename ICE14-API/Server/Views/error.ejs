@@ -12,21 +12,10 @@
 
 </head>
 <body id="<%= page %>">
-    <!-- Main Header -->
-    <header>
-        <%- include('./components/header'); -%>
-    </header>
-
     <!-- Main Content -->
     <main class="container">
         <h1>ERROR <%= error.status %> - <%= message %></h1>
     </main>
-    
-    <!-- Footer -->
-    <footer>
-        <%- include('./components/footer'); -%>
-    </footer>
-
     <!-- Scripts that will run after the content loads -->
     <script src="/jquery/dist/jquery.min.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
