@@ -14,7 +14,7 @@ import { HttpError } from "http-errors";
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || "3000") as number;
+const port = normalizePort(process.env.PORT || "3500") as number;
 app.set("port", port);
 
 /**
