@@ -8,7 +8,7 @@ const passport_1 = __importDefault(require("passport"));
 const user_1 = __importDefault(require("../Models/user"));
 const index_1 = require("../Util/index");
 function ProcessLoginPage(req, res, next) {
-    passport_1.default.authenticate('local', function (err, user, info) {
+    passport_1.default.authenticate('local', (err, user, info) => {
         if (err) {
             console.error(err);
             return next(err);
@@ -22,12 +22,14 @@ function ProcessLoginPage(req, res, next) {
                 return next(err);
             }
             const authToken = (0, index_1.GenerateToken)(user);
-            return res.json({ success: true, msg: 'User Logged in Successfully!', user: {
+            return res.json({
+                success: true, msg: 'User Logged in Successfully!', user: {
                     id: user._id,
                     DisplayName: user.DisplayName,
                     EmailAddress: user.EmailAddress,
                     username: user.username
-                }, token: authToken });
+                }, token: authToken
+            });
         });
     })(req, res, next);
 }
@@ -38,7 +40,7 @@ function ProcessRegisterPage(req, res, next) {
         EmailAddress: req.body.emailAddress,
         DisplayName: req.body.firstName + " " + req.body.lastName
     });
-    user_1.default.register(newUser, req.body.password, function (err) {
+    user_1.default.register(newUser, req.body.password, (err) => {
         if (err) {
             if (err.name == "UserExistsError") {
                 console.error('Error: Inserting New User');

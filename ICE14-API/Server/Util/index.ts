@@ -35,7 +35,7 @@ export function GenerateToken(user: UserDocument): string
 
     const jwtOptions = 
     {
-        expiresIn: 604800 // time in ms -> about 1 week 
+        expiresIn: 604800 // time in s -> about 1 week 
     }
 
     return jwt.sign(payload, DBConfig.SessionSecret, jwtOptions);
