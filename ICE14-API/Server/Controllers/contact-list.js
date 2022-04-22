@@ -32,9 +32,9 @@ function DisplayEditPage(req, res, next) {
 exports.DisplayEditPage = DisplayEditPage;
 function ProcessAddPage(req, res, next) {
     let newContact = new contact_1.default({
-        "FullName": req.body.fullName,
-        "ContactNumber": req.body.contactNumber,
-        "EmailAddress": req.body.emailAddress
+        "FullName": req.body.FullName,
+        "ContactNumber": req.body.ContactNumber,
+        "EmailAddress": req.body.EmailAddress
     });
     contact_1.default.create(newContact, (err) => {
         if (err) {
@@ -49,9 +49,9 @@ function ProcessEditPage(req, res, next) {
     let id = req.params.id;
     let updatedContact = new contact_1.default({
         "_id": id,
-        "FullName": req.body.fullName,
-        "ContactNumber": req.body.contactNumber,
-        "EmailAddress": req.body.emailAddress
+        "FullName": req.body.FullName,
+        "ContactNumber": req.body.ContactNumber,
+        "EmailAddress": req.body.EmailAddress
     });
     contact_1.default.updateOne({ _id: id }, updatedContact, (err) => {
         if (err) {
